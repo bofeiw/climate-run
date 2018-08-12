@@ -1,0 +1,180 @@
+@-webkit-keyframes Gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@-moz-keyframes Gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes Gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@-webkit-keyframes Slide {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: -4550px 0;
+    }
+}
+
+@-moz-keyframes Slide {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: -4550px 0;
+    }
+}
+
+@keyframes Slide {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: -4550px 0;
+    }
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Lato', sans-serif;
+    /* overflow: hidden; */
+}
+
+.start-screen,
+.game,
+.game-over {
+    height: 100vh;
+    width: 100vw;
+}
+
+.start-screen,
+.game-over {
+    background-color: #131313;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+h1 {
+    color: #fff;
+    align-self: center;
+    font-size: 50px;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+}
+
+.btn {
+    height: 50px;
+    width: 300px;
+    text-transform: uppercase;
+    border-radius: 5px;
+    align-self: center;
+    font-size: 17px;
+    font-weight: bold;
+    color: #fff;
+    /* background: linear-gradient(-70deg, #6689bf, #3d5272); */
+    background: linear-gradient(-70deg, #5c5231, #302b1b);
+    border: none;
+    letter-spacing: 2px;
+    margin-top: 20px;
+    box-shadow: 0px 3px 3px rgba(133, 120, 50, 0.3);
+    transition: all 0.3s ease 0s;
+    cursor: pointer;
+}
+
+.btn:hover {
+    /* background: linear-gradient(-70deg, #5781be, #2e486e); */
+    background: linear-gradient(-70deg, #584f32, #272316);
+}
+
+button:focus {
+    outline: 0;
+}
+
+.game {
+    background: linear-gradient(50deg, #fff, #f3f0e7, #555555, #222222);
+    background-size: 400% 400%;
+    -webkit-animation: Gradient 15s ease infinite;
+    -moz-animation: Gradient 15s ease infinite;
+    animation: Gradient 15s ease infinite;
+}
+
+.city-img {
+    background: url(./img/background.png);
+    background-size: auto 100%;
+    height: 100vh;
+    -webkit-animation: Slide 30s linear infinite;
+    -moz-animation: Slide 30s linear infinite;
+    animation: Slide 35s linear infinite;
+}
+
+.sun-img {
+    position: absolute;
+    margin-top: 6vh;
+    margin-left: 65vw;
+    width: 20vh;
+}
+
+span {
+    color: white;
+    align-self: center;
+    letter-spacing: 1.5px;
+}
+
+.result {
+    position: absolute;
+    text-align: right;
+    margin-top: 2vh;
+    margin-left: 93vw;
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.ostrich-game-over {
+    height: 30vh;
+    align-self: center;
+}
+
+.ostrich-game-start {
+    height: 20vh;
+    align-self: center;
+}
+
+.ostrich {
+    position: absolute;
+    margin-top: 67vh;
+    margin-left: 4vw;
+    width: 15vh;
+}
