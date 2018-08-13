@@ -9,6 +9,8 @@
     <title>Game</title>
     <link rel="stylesheet" href="./style.css">
     <link rel="shortcut icon" href="./img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
+        crossorigin="anonymous">
 </head>
 
 <body>
@@ -21,15 +23,20 @@
         <button class="btn btn-start">Start</button>
     </div>
     <div class="game" id="game">
+        <div class="egg-small"></div>
+        <div class="egg-big"></div>
         <img class="sun-img" src="./img/sun-moon.png" alt="sun">
-        <!-- <img class="ostrich" src="./img/ostrich-game.png" alt="ostrich"> -->
-        <img class="ostrich" src="./img/ostrich.gif" alt="ostrich">
-        <span class="result">00000</span>
+        <img class="ostrich-standing" src="./img/ostrich-game.png" alt="ostrich">
+        <img class="ostrich-moving hidden" src="./img/ostrich.gif" alt="ostrich">
+        <!-- <span class="lives">
+            <i class="fas fa-heart"></i> 3</span> -->
+        <span class="result">POINTS: 0</span>
         <div class="city-img"></div>
     </div>
-    <div class="game-over">
+    <div class="game-over" id="game-over">
         <img class="ostrich-game-over" src="./img/ostrich-head-down.png" alt="ostrich-head-down">
         <h1>Game over</h1>
+        <span class="final-result">POINTS: 0</span>
         <span>Press the button below to restart the game.</span>
         <button class="btn btn-restart">Try again</button>
     </div>
@@ -37,7 +44,7 @@
 
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
     <script src="./index.js" type="text/javascript"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.0/TweenMax.min.js"></script>
+    <script src="./game.js" type="text/javascript"></script>
 </body>
 
 </html>
