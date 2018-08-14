@@ -1,37 +1,57 @@
 $(document).ready(function() {
     var game = new Game();
 
+    $('html, body').animate(
+        {
+            scrollTop: 0
+        },
+        10
+    );
+
     $('.btn-start').click(() => {
-        $('html, body').animate(
-            {
-                scrollTop: $('#game').offset().top
-            },
-            700
-        );
+        setTimeout(function() {
+            game.canPlay = true;
+        }, 750);
+
+        $('.start-screen').css({
+            transform: 'translateY(-100%)'
+        });
+
+        $('.game').css({
+            transform: 'translateY(0)'
+        });
     });
 
     $('.btn-restart').click(() => {
-        $('html, body').animate(
-            {
-                scrollTop: $('#game').offset().top
-            },
-            800
-        );
+        setTimeout(function() {
+            game.canPlay = true;
+        }, 750);
+
+        $('.game').css({
+            transform: 'translateY(0)'
+        });
+
+        $('.game-over').css({
+            transform: 'translateY(100%)'
+        });
     });
 
     $(window).on('keydown', function(evt) {
-        switch (evt.which) {
-            case 32:
-                if (game.sceneMoving) {
-                    game.jumping();
-                } else {
-                    game.startCountingScore();
-                    game.startMoving();
-                    game.collisionCheck();
-                }
-                break;
-            default:
-                console.log('Unsupported key was pressed.');
+        if (game.canPlay) {
+            switch (evt.which) {
+                case 32:
+                    evt.preventDefault();
+                    if (game.sceneMoving) {
+                        game.jumping();
+                    } else {
+                        game.startCountingScore();
+                        game.startMoving();
+                        game.collisionCheck();
+                    }
+                    break;
+                default:
+                    console.log('Unsupported key was pressed.');
+            }
         }
     });
 });
