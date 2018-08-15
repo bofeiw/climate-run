@@ -20,23 +20,24 @@ Game.prototype.startMoving = function() {
     $('.ostrich-standing').addClass('hidden');
     $('.ostrich-moving').removeClass('hidden');
     $('.city-img').css('animation', 'Slide 3000s linear infinite');
-    $('.egg-small').css('display', 'block');
+    $('.grass-small').css('display', 'block');
     this.sceneMoving = true;
 
-    this.audio = new Audio('./music.mp3');
+    this.audio = new Audio('./sound/music.mp3');
     this.audio.play();
     this.audio.volume = 0.05;
+    this.audio.loop = true;
 
     setTimeout(function() {
-        $('.egg-big').css('display', 'block');
+        $('.grass-big').css('display', 'block');
     }, 4000);
 
-    setInterval(function() {
-        $('.grass').css('display', 'block');
+    this.eggInterval = setInterval(function() {
+        $('.egg').css('display', 'block');
         setTimeout(function() {
-            $('.grass').css('display', 'none');
+            $('.egg').css('display', 'none');
         }, 6500);
-    }, 12000);
+    }, 14000);
 };
 
 Game.prototype.jumping = function() {
@@ -58,13 +59,28 @@ Game.prototype.collisionCheck = function() {
             }
 
             var ostrich = $('.ostrich-moving');
-            var smallEgg = $('.egg-small');
-            var bigEgg = $('.egg-big');
-            if (collide(ostrich, smallEgg) || collide(ostrich, bigEgg)) {
+            var smallGrass = $('.grass-small');
+            var bigGrass = $('.grass-big');
+            var eggBonus = $('.egg');
+
+            if (collide(ostrich, eggBonus)) {
+                this.lastLostLife = currentTime;
+                this.lives++;
+                $('.lives').html(this.lives);
+                $('.egg').css('display', 'none');
+
+                this.bonus = new Audio('./sound/bonus.mp3');
+                this.bonus.play();
+                this.bonus.volume = 0.5;
+            } else if (collide(ostrich, smallGrass) || collide(ostrich, bigGrass)) {
                 this.lastLostLife = currentTime;
                 this.lives--;
                 $('.lives').html(this.lives);
                 $('.ostrich-moving').addClass('lose-life');
+
+                this.failure = new Audio('./sound/life-lost.mp3');
+                this.failure.play();
+                this.failure.volume = 0.1;
 
                 setTimeout(
                     function() {
@@ -91,8 +107,10 @@ Game.prototype.gameStop = function() {
     $('.ostrich-standing').removeClass('hidden');
     $('.ostrich-moving').addClass('hidden');
     $('.city-img').css('animation', 'none');
-    $('.egg-small').css('display', 'none');
-    $('.egg-big').css('display', 'none');
+    $('.grass-small').css('display', 'none');
+    $('.grass-big').css('display', 'none');
+    $('.egg').css('display', 'none');
+    clearInterval(this.eggInterval);
 
     setTimeout(function() {
         $('.game').css({
@@ -126,7 +144,7 @@ function collide(objOne, objTwo) {
     var birdX = bird.offset().left;
     var birdW = bird.width() - 30;
     var birdY = bird.offset().top;
-    var birdH = bird.height();
+    var birdH = bird.height() - 5;
 
     var obstacleX = obstacle.offset().left;
     var obstacleW = obstacle.width();

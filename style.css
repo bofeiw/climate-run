@@ -66,22 +66,6 @@
     100% {
         transform: translateY(0);
     }
-    10%,
-    90% {
-        transform: translateY(-30px);
-    }
-    20%,
-    80% {
-        transform: translateY(-60px);
-    }
-    30%,
-    70% {
-        transform: translateY(-90px);
-    }
-    40%,
-    60% {
-        transform: translateY(-120px);
-    }
     50% {
         transform: translateY(-150px);
     }
@@ -145,7 +129,7 @@ h1 {
     border-radius: 5px;
     align-self: center;
     font-size: 17px;
-    font-weight: bold;
+    font-weight: 500;
     color: #fff;
     background: linear-gradient(-70deg, #5c5231, #302b1b);
     border: none;
@@ -224,13 +208,13 @@ i {
     top: 2vh;
     right: 13vw;
     letter-spacing: 2px;
-    margin-left: 10px;
 }
 
 i {
     color: white;
     top: 2.3vh;
     right: 14.5vw;
+    padding-right: 8px;
 }
 
 .ostrich-game-over {
@@ -253,7 +237,7 @@ i {
 }
 
 .jump {
-    animation: Jump 1.25s ease 0s 1 normal;
+    animation: Jump 1.35s ease 0s 1 normal;
 }
 
 .lose-life {
@@ -273,38 +257,36 @@ i {
     margin-bottom: 20px;
 }
 
-.egg-small,
-.egg-big {
+.button-info {
+    margin-top: 15px;
+}
+
+.egg {
+    width: 32px;
+    height: 45px;
+    background-color: rgb(248, 247, 180);
     bottom: 14vh;
     position: absolute;
     right: -1vw;
     border: 5px solid #000;
     border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-    animation: Move 8.5s infinite linear;
+    animation: Move 6.5s infinite linear;
     display: none;
 }
 
-.egg-small {
-    width: 32px;
-    height: 45px;
-    background-color: rgb(248, 247, 180);
-}
-
-.egg-big {
-    width: 42px;
-    height: 59px;
-    background-color: rgb(247, 245, 138);
-}
-
-.grass {
+.grass-small,
+.grass-big {
     position: absolute;
     bottom: 14vh;
     right: -1vw;
     display: none;
-    animation: Move 6.5s infinite linear;
-    height: 37px;
+    animation: Move 8.5s infinite linear;
 }
 
-.button-info {
-    margin-top: 15px;
+.grass-small {
+    width: 58px;
+}
+
+.grass-big {
+    height: 50px;
 }
