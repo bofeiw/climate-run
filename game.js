@@ -11,6 +11,8 @@ Game.prototype.startCountingScore = function() {
         function() {
             this.time++;
             $('.result').html('POINTS: ' + this.time);
+
+            addObstacles(this.time);
         }.bind(this),
         1000
     );
@@ -19,7 +21,7 @@ Game.prototype.startCountingScore = function() {
 Game.prototype.startMoving = function() {
     $('.ostrich-standing').addClass('hidden');
     $('.ostrich-moving').removeClass('hidden');
-    $('.city-img').css('animation', 'Slide 3000s linear infinite');
+    $('.city-img').css('animation', 'Slide 2500s linear infinite');
     $('.grass-small').css('display', 'block');
     this.sceneMoving = true;
 
@@ -61,6 +63,8 @@ Game.prototype.collisionCheck = function() {
             var ostrich = $('.ostrich-moving');
             var smallGrass = $('.grass-small');
             var bigGrass = $('.grass-big');
+            var thinGrass = $('.grass-thin');
+            var bigGrassSecond = $('.grass-big-second');
             var eggBonus = $('.egg');
 
             if (collide(ostrich, eggBonus)) {
@@ -72,7 +76,12 @@ Game.prototype.collisionCheck = function() {
                 this.bonus = new Audio('./sound/bonus.mp3');
                 this.bonus.play();
                 this.bonus.volume = 0.5;
-            } else if (collide(ostrich, smallGrass) || collide(ostrich, bigGrass)) {
+            } else if (
+                collide(ostrich, smallGrass) ||
+                collide(ostrich, bigGrass) ||
+                collide(ostrich, bigGrassSecond) ||
+                collide(ostrich, thinGrass)
+            ) {
                 this.lastLostLife = currentTime;
                 this.lives--;
                 $('.lives').html(this.lives);
@@ -104,11 +113,13 @@ Game.prototype.gameStop = function() {
     clearInterval(this.collideInterval);
     this.audio.pause();
 
-    $('.ostrich-standing').removeClass('hidden');
+    $('.ostrich-down').removeClass('hidden');
     $('.ostrich-moving').addClass('hidden');
     $('.city-img').css('animation', 'none');
     $('.grass-small').css('display', 'none');
     $('.grass-big').css('display', 'none');
+    $('.grass-big-second').css('display', 'none');
+    $('.grass-thin').css('display', 'none');
     $('.egg').css('display', 'none');
     clearInterval(this.eggInterval);
 
@@ -120,7 +131,7 @@ Game.prototype.gameStop = function() {
         $('.game-over').css({
             transform: 'translateY(0)'
         });
-    }, 500);
+    }, 2500);
 
     clearInterval(this.counter);
     $('.final-result').html('POINTS: ' + this.time);
@@ -132,8 +143,11 @@ Game.prototype.gameStop = function() {
 
             this.lives = 3;
             $('.lives').html(this.lives);
+
+            $('.ostrich-down').addClass('hidden');
+            $('.ostrich-standing').removeClass('hidden');
         }.bind(this),
-        2000
+        3000
     );
 };
 
@@ -142,7 +156,7 @@ function collide(objOne, objTwo) {
     var obstacle = objTwo;
 
     var birdX = bird.offset().left;
-    var birdW = bird.width() - 30;
+    var birdW = bird.width() - 28;
     var birdY = bird.offset().top;
     var birdH = bird.height() - 5;
 
@@ -160,5 +174,17 @@ function collide(objOne, objTwo) {
         return false;
     } else {
         return true;
+    }
+}
+
+function addObstacles(time) {
+    if (time === 10) {
+        setTimeout(function() {
+            $('.grass-thin').css('display', 'block');
+        }, 3000);
+    } else if (time === 15) {
+        setTimeout(function() {
+            $('.grass-big-second').css('display', 'block');
+        }, 2200);
     }
 }

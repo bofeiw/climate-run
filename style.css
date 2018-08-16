@@ -229,15 +229,16 @@ i {
 }
 
 .ostrich-standing,
-.ostrich-moving {
+.ostrich-moving,
+.ostrich-down {
     position: absolute;
     bottom: 14vh;
     left: 4vw;
-    width: 96px;
+    height: 120px;
 }
 
 .jump {
-    animation: Jump 1.35s ease 0s 1 normal;
+    animation: Jump 1.4s ease 0s 1 normal;
 }
 
 .lose-life {
@@ -275,18 +276,25 @@ i {
 }
 
 .grass-small,
-.grass-big {
+.grass-big,
+.grass-big-second,
+.grass-thin {
     position: absolute;
     bottom: 14vh;
     right: -1vw;
     display: none;
-    animation: Move 8.5s infinite linear;
+    animation: Move 7.3s infinite linear;
 }
 
 .grass-small {
-    width: 58px;
+    width: 57px;
 }
 
-.grass-big {
-    height: 50px;
+.grass-big,
+.grass-big-second {
+    height: 49px;
+}
+
+.grass-thin {
+    height: 52px;
 }
