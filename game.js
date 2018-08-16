@@ -120,6 +120,7 @@ Game.prototype.gameStop = function() {
     $('.grass-big').css('display', 'none');
     $('.grass-big-second').css('display', 'none');
     $('.grass-thin').css('display', 'none');
+    $('.grass-double').css('display', 'none');
     $('.egg').css('display', 'none');
     clearInterval(this.eggInterval);
 
@@ -186,5 +187,9 @@ function addObstacles(time) {
         setTimeout(function() {
             $('.grass-big-second').css('display', 'block');
         }, 1700);
+    } else if (time === 45) {
+        setTimeout(function() {
+            $('.grass-double').css('display', 'block');
+        }, 200);
     }
 }

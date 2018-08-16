@@ -272,7 +272,8 @@ i {
 .grass-small,
 .grass-big,
 .grass-big-second,
-.grass-thin {
+.grass-thin,
+.grass-double {
     position: absolute;
     bottom: 14vh;
     right: -1vw;
@@ -291,4 +292,8 @@ i {
 
 .grass-thin {
     height: 53px;
+}
+
+.grass-double {
+    height: 45px;
 }
