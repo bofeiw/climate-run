@@ -169,18 +169,12 @@ button:focus {
 
 .moon-img {
     right: 15vw;
-    animation-name: Reversed-FadeInOut;
-    animation-timing-function: ease-in-out;
-    animation-iteration-count: infinite;
-    animation-duration: 15s;
+    animation: Reversed-FadeInOut 15s ease-in-out 0s infinite;
 }
 
 .sun-img {
     left: 20vw;
-    animation-name: FadeInOut;
-    animation-timing-function: ease-in-out;
-    animation-iteration-count: infinite;
-    animation-duration: 15s;
+    animation: FadeInOut 15s ease-in-out 0s infinite;
 }
 
 span {
@@ -194,7 +188,7 @@ span {
 i {
     position: absolute;
     text-align: right;
-    font-size: 19px;
+    font-size: 18px;
     font-weight: bold;
 }
 
@@ -271,7 +265,7 @@ i {
     right: -1vw;
     border: 5px solid #000;
     border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-    animation: Move 6.5s infinite linear;
+    animation: Move 6s infinite linear;
     display: none;
 }
 
@@ -296,5 +290,5 @@ i {
 }
 
 .grass-thin {
-    height: 52px;
+    height: 53px;
 }

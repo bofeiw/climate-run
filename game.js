@@ -27,7 +27,7 @@ Game.prototype.startMoving = function() {
 
     this.audio = new Audio('./sound/music.mp3');
     this.audio.play();
-    this.audio.volume = 0.05;
+    this.audio.volume = 0.14;
     this.audio.loop = true;
 
     setTimeout(function() {
@@ -75,7 +75,7 @@ Game.prototype.collisionCheck = function() {
 
                 this.bonus = new Audio('./sound/bonus.mp3');
                 this.bonus.play();
-                this.bonus.volume = 0.5;
+                this.bonus.volume = 0.6;
             } else if (
                 collide(ostrich, smallGrass) ||
                 collide(ostrich, bigGrass) ||
@@ -89,7 +89,7 @@ Game.prototype.collisionCheck = function() {
 
                 this.failure = new Audio('./sound/life-lost.mp3');
                 this.failure.play();
-                this.failure.volume = 0.1;
+                this.failure.volume = 0.2;
 
                 setTimeout(
                     function() {
@@ -178,13 +178,13 @@ function collide(objOne, objTwo) {
 }
 
 function addObstacles(time) {
-    if (time === 10) {
+    if (time === 15) {
         setTimeout(function() {
             $('.grass-thin').css('display', 'block');
-        }, 3000);
-    } else if (time === 15) {
+        }, 5500);
+    } else if (time === 30) {
         setTimeout(function() {
             $('.grass-big-second').css('display', 'block');
-        }, 2200);
+        }, 1700);
     }
 }
