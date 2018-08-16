@@ -66,6 +66,7 @@ Game.prototype.collisionCheck = function() {
             var thinGrass = $('.grass-thin');
             var bigGrassSecond = $('.grass-big-second');
             var eggBonus = $('.egg');
+            var doubleGrass = $('.grass-double');
 
             if (collide(ostrich, eggBonus)) {
                 this.lastLostLife = currentTime;
@@ -80,7 +81,8 @@ Game.prototype.collisionCheck = function() {
                 collide(ostrich, smallGrass) ||
                 collide(ostrich, bigGrass) ||
                 collide(ostrich, bigGrassSecond) ||
-                collide(ostrich, thinGrass)
+                collide(ostrich, thinGrass) ||
+                collide(ostrich, doubleGrass)
             ) {
                 this.lastLostLife = currentTime;
                 this.lives--;
