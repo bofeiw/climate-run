@@ -41,10 +41,11 @@ $(document).ready(function() {
 
     $(window).on('keydown', function(evt) {
         if (game.canPlay) {
+            game.startAudio();
             switch (evt.which) {
                 case 32:
                     // space
-                    plantTree();
+                    plantTree(game);
                     break;
                 case 37:
                     // left
