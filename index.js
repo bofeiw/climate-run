@@ -43,16 +43,15 @@ $(document).ready(function() {
         if (game.canPlay) {
             switch (evt.which) {
                 case 32:
+                    // space
                     plantTree();
                     break;
                 case 37:
                     // left
-                    console.log("left");
                     game.moveLeft();
                     break;
                 case 39:
                     // right
-                    console.log("right");
                     game.moveRight();
                     break;
                 default:
