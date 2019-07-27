@@ -2,26 +2,28 @@ var Game = function() {
     this.time = 0;
     this.sceneMoving = false;
     this.canPlay = false;
-    this.lives = 3;
+
     this.lastLostLife = 0;
 };
-
+var lives = 3;
 var ostrich = document.getElementsByClassName('ostrich-moving')[0];
 var x = 40;// set x to 40
 var speed = 1;
-var gsmall = Math.trunc((Math.random()*100)%100);
-var gbig = Math.trunc((Math.random()*100)%100);
-var gbig2= Math.trunc((Math.random()*100)%100);
-var gthin = Math.trunc((Math.random()*100)%100);
-var gdouble = Math.trunc((Math.random()*100)%100);
+var pos = Math.trunc((Math.random()*100)%100);
+var pos1 = Math.trunc((Math.random()*100)%100);
+var pos2= Math.trunc((Math.random()*100)%100);
+var pos3 = Math.trunc((Math.random()*100)%100);
+var pos4 = Math.trunc((Math.random()*100)%100);
 
 Game.prototype.moveLeft = function() {
-	x -= speed
+	if(x>= 0)
+		x -= speed;
 	ostrich.style.left = x +"vw";
 }
 
 Game.prototype.moveRight = function() {
-	x += speed
+	if(x <= 90)
+		x += speed;
 	ostrich.style.left = x +"vw";
 }
 
@@ -41,7 +43,7 @@ Game.prototype.startMoving = function() {
     $('.ostrich-standing').addClass('hidden');
     $('.ostrich-moving').removeClass('hidden');
     $('.city-img').css('animation', 'none');
-    $('.grass-small').css('display', 'block');
+    $('.plastic').css('display', 'block');
     this.sceneMoving = true;
 
     this.audio = new Audio('./sound/music.mp3');
@@ -50,7 +52,7 @@ Game.prototype.startMoving = function() {
     this.audio.loop = true;
 
     setTimeout(function() {
-        $('.grass-big').css('display', 'block');
+        $('.plastic-1').css('display', 'block');
     }, 4000);
 
     this.eggInterval = setInterval(function() {
@@ -80,57 +82,91 @@ Game.prototype.collisionCheck = function() {
             }
 
             var ostrich = $('.ostrich-moving');
-            var plastic = $('.grass-small');
-            var bigGrass = $('.grass-big');
-            var thinGrass = $('.grass-thin');
-            var bigGrassSecond = $('.grass-big-second');
+            var plastic = $('.plastic');
+			var plastic1 = $('.plastic-1');
+			var plastic2 = $('.plastic-2');
+            var plastic3 = $('.plastic-3');
+			var plastic4 = $('.plastic-4');
+
             var eggBonus = $('.egg');
-            var doubleGrass = $('.grass-double');
+
+			console.log(lives);
 
             if (collide(ostrich, eggBonus)) {
                 this.lastLostLife = currentTime;
-                this.lives++;
-                $('.lives').html(this.lives);
+                lives++;
+                $('.lives').html(lives);
                 $('.egg').css('display', 'none');
 
                 this.bonus = new Audio('./sound/bonus.mp3');
                 this.bonus.play();
                 this.bonus.volume = 0.6;
-            } else if (
-                collide(ostrich, plastic)
-                // collide(ostrich, bigGrass) ||
-                // collide(ostrich, bigGrassSecond) ||
-                // collide(ostrich, thinGrass) ||
-                // collide(ostrich, doubleGrass)
-            ) {
+            }
+			if (collide(ostrich, plastic)) {
                 this.lastLostLife = currentTime;
-                //this.lives--;
-                $('.lives').html(this.lives);
-                $('.grass-small').css('display', 'none')
-                //this.failure = new Audio('./sound/life-lost.mp3');
-                //this.failure.play();
-                //this.failure.volume = 0.2;
-
+                $('.plastic').css('display', 'none')
                 setTimeout(
                     function() {
                         $('.ostrich-moving').removeClass('lose-life');
+
                     }.bind(this),
-                    1000
+                    500
                 );
 
-                if (this.lives < 1) {
-                    this.gameStop();
-                }
             }
-			// else if(this.lives == 0) {
-			// 	this.lastLostLife = currentTime;
-            //     $('.lives').html(this.lives);
-            //     $('.ostrich-moving').addClass('lose-life');
-			//
-			// 	this.failure = new Audio('./sound/life-lost.mp3');
-            //     this.failure.play();
-            //     this.failure.volume = 0.2;
-			// }
+			if (collide(ostrich, plastic1)) {
+				this.lastLostLife = currentTime;
+				$('.plastic-1').css('display', 'none')
+                setTimeout(
+                    function() {
+                        $('.ostrich-moving').removeClass('lose-life');
+
+                    }.bind(this),
+                    500
+                );
+            }
+			if (collide(ostrich, plastic2)) {
+				this.lastLostLife = currentTime;
+				$('.plastic-2').css('display', 'none')
+                setTimeout(
+                    function() {
+                        $('.ostrich-moving').removeClass('lose-life');
+
+                    }.bind(this),
+                    500
+                );
+            }
+			if (collide(ostrich, plastic3)) {
+				this.lastLostLife = currentTime;
+				$('.plastic-3').css('display', 'none')
+                setTimeout(
+                    function() {
+                        $('.ostrich-moving').removeClass('lose-life');
+
+                    }.bind(this),
+                    500
+                );
+            }
+			if (collide(ostrich, plastic4)) {
+				this.lastLostLife = currentTime;
+				$('.plastic-4').css('display', 'none')
+                setTimeout(
+                    function() {
+                        $('.ostrich-moving').removeClass('lose-life');
+
+                    }.bind(this),
+                    500
+                );
+            }
+			if (lives <= 0) {
+				this.lastLostLife = currentTime;
+				this.gameStop();
+
+                // this.failure = new Audio('./sound/life-lost.mp3');
+                // this.failure.play();
+                // this.failure.volume = 0.2;
+
+			}
         }.bind(this),
         50
     );
@@ -145,11 +181,11 @@ Game.prototype.gameStop = function() {
     $('.ostrich-down').removeClass('hidden');
     $('.ostrich-moving').addClass('hidden');
     $('.city-img').css('animation', 'none');
-    $('.grass-small').css('display', 'none');
-    $('.grass-big').css('display', 'none');
-    $('.grass-big-second').css('display', 'none');
-    $('.grass-thin').css('display', 'none');
-    $('.grass-double').css('display', 'none');
+    $('.plastic').css('display', 'none');
+    $('.plastic-1').css('display', 'none');
+    $('.plastic-2').css('display', 'none');
+    $('.plastic-3').css('display', 'none');
+    $('.plastic-4').css('display', 'none');
     $('.egg').css('display', 'none');
     clearInterval(this.eggInterval);
 
@@ -171,8 +207,8 @@ Game.prototype.gameStop = function() {
             this.time = 0;
             $('.result').html('POINTS: ' + this.time);
 
-            this.lives = 3;
-            $('.lives').html(this.lives);
+            lives = 3;
+            $('.lives').html(lives);
 
             $('.ostrich-down').addClass('hidden');
             $('.ostrich-standing').removeClass('hidden');
@@ -211,51 +247,50 @@ function addObstacles(time) {
     if (time%5 === 3) {
 
         setTimeout(function() {
-			gsmall = Math.trunc((Math.random()*100)%100);
+			pos = Math.trunc((Math.random()*100)%100);
 
 			$('.ostrich-moving').removeClass('lose-life');
-			if($('.grass-small').css('display')!=='none') {
+			if($('.plastic').css('display')!=='none') {
 				$('.ostrich-moving').addClass('lose-life');
-
-				this.lives -= 1;
-
+				lives--;
+                $('.lives').html(lives);
 			}
-			// var gbig = Math.trunc((Math.random*100)%100);
-			// var gbig2= Math.trunc((Math.random*100)%100);
-			// var gthin = Math.trunc((Math.random*100)%100);
-			// var gdouble = Math.trunc((Math.random*100)%100);
-			// console.log(gsmall);
-
-			$('.grass-small').css('right', gsmall+"vw");
-            $('.grass-small').css('display', 'block');
+			$('.plastic').css('right', pos+"vw");
+            $('.plastic').css('display', 'block');
         }, 5500);
     } else if (time%10 === 7) {
         setTimeout(function() {
-			gbig2 = Math.trunc((Math.random()*100)%100);
+			pos2 = Math.trunc((Math.random()*100)%100);
 
-			$('.grass-big-second').css('right', gbig2+"vw");
-            $('.grass-big-second').css('display', 'block');
+			if($('.plastic-1').css('display')!=='none') {
+				$('.ostrich-moving').addClass('lose-life');
+				lives--;
+				$('.lives').html(lives);
+			}
+
+			$('.plastic-1').css('right', pos2+"vw");
+            $('.plastic-1').css('display', 'block');
         }, 1700);
     } else if (time%10 === 9) {
         setTimeout(function() {
-			gbig2 = Math.trunc((Math.random()*100)%100);
+			pos2 = Math.trunc((Math.random()*100)%100);
 
-			$('.grass-big').css('right', gbig+"vw");
-            $('.grass-big').css('display', 'block');
+			$('.plastic-2').css('right', pos1+"vw");
+            $('.plastic-2').css('display', 'block');
         }, 1700);
     } else if (time%20 === 18) {
         setTimeout(function() {
-			gdouble = Math.trunc((Math.random()*100)%100);
+			pos4 = Math.trunc((Math.random()*100)%100);
 
-			$('.grass-double').css('right', gdouble+"vw");
-            $('.grass-double').css('display', 'block');
+			$('.plastic-3').css('right', pos4+"vw");
+            $('.plastic-3').css('display', 'block');
         }, 200);
     } else if (time%10 === 4) {
         setTimeout(function() {
-			gthin = Math.trunc((Math.random()*100)%100);
+			pos3 = Math.trunc((Math.random()*100)%100);
 
-			$('.grass-thin').css('right', gthin+"vw");
-            $('.grass-thin').css('display', 'block');
+			$('.plastic-4').css('right', pos3+"vw");
+            $('.plastic-4').css('display', 'block');
         }, 200);
     }
 }

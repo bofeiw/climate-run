@@ -269,32 +269,32 @@ i {
     display: none;
 }
 
-.grass-small,
-.grass-big,
-.grass-big-second,
-.grass-thin,
-.grass-double {
+.plastic,
+.plastic-1,
+.plastic-2,
+.plastic-3,
+.plastic-4 {
     position: absolute;
     bottom: 14vh;
     right: 10vw;
     display: none;
     animation: none;
-	
+
 }
 
-.grass-small {
+.plastic {
     width: 57px;
 }
 
-.grass-big,
-.grass-big-second {
+.plastic-1,
+.plastic-2 {
     height: 49px;
 }
 
-.grass-thin {
+.plastic-3 {
     height: 53px;
 }
 
-.grass-double {
+.plastic-4 {
     height: 45px;
 }
