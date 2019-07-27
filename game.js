@@ -15,7 +15,7 @@ Game.prototype.startCountingScore = function () {
         function () {
             this.time++;
             $('.result').html('POINTS: ' + this.time);
-            if (Math.random() > 0) {
+            if (Math.random() > 0.7) {
                 addObstacles(this.time);
             }
         }.bind(this),
@@ -45,16 +45,6 @@ Game.prototype.startMoving = function () {
             $('.egg').css('display', 'none');
         }, 6500);
     }, 14000);
-};
-
-Game.prototype.jumping = function () {
-    if (!$('.ostrich-moving').hasClass('jump')) {
-        $('.ostrich-moving').addClass('jump');
-
-        setTimeout(function () {
-            $('.ostrich-moving').removeClass('jump');
-        }, 1000);
-    }
 };
 
 Game.prototype.moveLeft = function () {
@@ -98,32 +88,6 @@ Game.prototype.collisionCheck = function () {
                 this.bonus = new Audio('./sound/bonus.mp3');
                 this.bonus.play();
                 this.bonus.volume = 0.6;
-            } else if (
-                collide(ostrich, smallGrass) ||
-                collide(ostrich, bigGrass) ||
-                collide(ostrich, bigGrassSecond) ||
-                collide(ostrich, thinGrass) ||
-                collide(ostrich, doubleGrass)
-            ) {
-                this.lastLostLife = currentTime;
-                this.lives--;
-                $('.lives').html(this.lives);
-                $('.ostrich-moving').addClass('lose-life');
-
-                this.failure = new Audio('./sound/life-lost.mp3');
-                this.failure.play();
-                this.failure.volume = 0.2;
-
-                setTimeout(
-                    function () {
-                        $('.ostrich-moving').removeClass('lose-life');
-                    }.bind(this),
-                    1000
-                );
-
-                if (this.lives < 1) {
-                    this.gameStop();
-                }
             }
         }.bind(this),
         50
@@ -208,14 +172,12 @@ function createTree(x) {
 }
 
 function plantTree() {
-    // console.log("pantTree");
     const ostrich = $('.ostrich-moving');
     const deserts = $('.desert');
     for (let i = 0; i < deserts.length; ++i) {
         const desert = deserts[i];
-        // console.log(desert.id);
-        const desertTrue = $(`#${id}`);
-        if (collision(ostrich, desertTrue)) {
+        const desertTrue = $(`#${desert.id}`);
+        if (collide(ostrich, desertTrue)) {
             desertTrue.remove();
             $('#game').append(createTree(ostrich.position().left));
             return;
@@ -232,25 +194,22 @@ function createDessert(x) {
 function addObstacles(time) {
     const limitRight = $(window).width();
     const x = Math.random() * limitRight;
-    const desert = createDessert(x);
-    $('#game').append(desert);
-}
-
-// https://stackoverflow.com/a/5541252/9494810
-function collision($div1, $div2) {
-    var x1 = $div1.offset().left;
-    var y1 = $div1.offset().top;
-    var h1 = $div1.outerHeight(true);
-    var w1 = $div1.outerWidth(true);
-    var b1 = y1 + h1;
-    var r1 = x1 + w1;
-    var x2 = $div2.offset().left;
-    var y2 = $div2.offset().top;
-    var h2 = $div2.outerHeight(true);
-    var w2 = $div2.outerWidth(true);
-    var b2 = y2 + h2;
-    var r2 = x2 + w2;
-
-    if (b1 < y2 || y1 > b2 || r1 < x2 || x1 > r2) return false;
-    return true;
+    const game = $('#game');
+    const newDesert = createDessert(x);
+    game.append(newDesert);
+    // let foundEmptySpace = false;
+    // while (! foundEmptySpace) {
+    //     const deserts = $('.desert');
+    //     for (let i = 0; i < deserts.length; ++i) {
+    //         const desert = deserts[i];
+    //         const desertTrue = $(`#${desert.id}`);
+    //         if (collide(newDesert, desertTrue)) {
+    //             newDesert.remove();
+    //             break;
+    //         } else {
+    //             foundEmptySpace = true;
+    //         }
+    //     }
+    //     break;
+    // }
 }
