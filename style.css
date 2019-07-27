@@ -273,6 +273,8 @@ i {
 .grass-big,
 .grass-big-second,
 .grass-thin,
+.desert,
+.tree,
 .grass-double {
     position: absolute;
     bottom: 14vh;

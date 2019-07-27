@@ -39,6 +39,7 @@ $(document).ready(function() {
     $(window).on('keydown', function(evt) {
         if (game.canPlay) {
             switch (evt.which) {
+                // 32 is the key code for space
                 case 32:
                     evt.preventDefault();
                     if (game.sceneMoving) {
@@ -49,8 +50,7 @@ $(document).ready(function() {
                         game.collisionCheck();
                     }
                     break;
-                default:
-                    console.log('Unsupported key was pressed.');
+                
             }
         }
     });

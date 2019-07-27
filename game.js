@@ -1,4 +1,4 @@
-var Game = function() {
+var Game = function () {
     this.time = 0;
     this.sceneMoving = false;
     this.canPlay = false;
@@ -6,19 +6,19 @@ var Game = function() {
     this.lastLostLife = 0;
 };
 
-Game.prototype.startCountingScore = function() {
+Game.prototype.startCountingScore = function () {
     this.counter = setInterval(
-        function() {
+        function () {
             this.time++;
             $('.result').html('POINTS: ' + this.time);
 
-            addObstacles(this.time);
+           
         }.bind(this),
         1000
     );
 };
 
-Game.prototype.startMoving = function() {
+Game.prototype.startMoving = function () {
     $('.ostrich-standing').addClass('hidden');
     $('.ostrich-moving').removeClass('hidden');
     $('.city-img').css('animation', 'Slide 2500s linear infinite');
@@ -30,31 +30,37 @@ Game.prototype.startMoving = function() {
     this.audio.volume = 0.14;
     this.audio.loop = true;
 
-    setTimeout(function() {
+    // display the grass sometimes
+    setTimeout(function () {
         $('.grass-big').css('display', 'block');
     }, 4000);
 
-    this.eggInterval = setInterval(function() {
+    setTimeout(function () {
+        $('.desert').css('display', 'block');
+    }, 4000);
+
+    // display the egg sometimes
+    this.eggInterval = setInterval(function () {
         $('.egg').css('display', 'block');
-        setTimeout(function() {
+        setTimeout(function () {
             $('.egg').css('display', 'none');
         }, 6500);
     }, 14000);
 };
 
-Game.prototype.jumping = function() {
+Game.prototype.jumping = function () {
     if (!$('.ostrich-moving').hasClass('jump')) {
         $('.ostrich-moving').addClass('jump');
 
-        setTimeout(function() {
+        setTimeout(function () {
             $('.ostrich-moving').removeClass('jump');
         }, 1000);
     }
 };
 
-Game.prototype.collisionCheck = function() {
+Game.prototype.collisionCheck = function () {
     this.collideInterval = setInterval(
-        function() {
+        function () {
             var currentTime = new Date().getTime();
             if (currentTime - this.lastLostLife < 1000) {
                 return;
@@ -67,6 +73,7 @@ Game.prototype.collisionCheck = function() {
             var bigGrassSecond = $('.grass-big-second');
             var eggBonus = $('.egg');
             var doubleGrass = $('.grass-double');
+            var desert = $('.desert');
 
             if (collide(ostrich, eggBonus)) {
                 this.lastLostLife = currentTime;
@@ -77,28 +84,27 @@ Game.prototype.collisionCheck = function() {
                 this.bonus = new Audio('./sound/bonus.mp3');
                 this.bonus.play();
                 this.bonus.volume = 0.6;
-            } else if (
-                collide(ostrich, smallGrass) ||
-                collide(ostrich, bigGrass) ||
-                collide(ostrich, bigGrassSecond) ||
-                collide(ostrich, thinGrass) ||
-                collide(ostrich, doubleGrass)
-            ) {
-                this.lastLostLife = currentTime;
-                this.lives--;
-                $('.lives').html(this.lives);
-                $('.ostrich-moving').addClass('lose-life');
+            } else if ( collide(ostrich, desert)) {
+                // this.lastLostLife = currentTime;
+                //this.lives--;
+                //$('.lives').html(this.lives);
+                // $('.ostrich-moving').addClass('lose-life');
 
-                this.failure = new Audio('./sound/life-lost.mp3');
-                this.failure.play();
-                this.failure.volume = 0.2;
+                //this.failure = new Audio('./sound/life-lost.mp3');
+                //this.failure.play();
+                //this.failure.volume = 0.2;
 
-                setTimeout(
-                    function() {
-                        $('.ostrich-moving').removeClass('lose-life');
-                    }.bind(this),
-                    1000
-                );
+                // setTimeout(
+                //     function () {
+                //         $('.ostrich-moving').removeClass('lose-life');
+                //     }.bind(this),
+                //     1000
+                // );
+
+                console.log("collid with desset");
+
+
+
 
                 if (this.lives < 1) {
                     this.gameStop();
@@ -109,7 +115,7 @@ Game.prototype.collisionCheck = function() {
     );
 };
 
-Game.prototype.gameStop = function() {
+Game.prototype.gameStop = function () {
     this.canPlay = false;
     this.sceneMoving = false;
     clearInterval(this.collideInterval);
@@ -126,7 +132,7 @@ Game.prototype.gameStop = function() {
     $('.egg').css('display', 'none');
     clearInterval(this.eggInterval);
 
-    setTimeout(function() {
+    setTimeout(function () {
         $('.game').css({
             transform: 'translateY(-100%)'
         });
@@ -140,7 +146,7 @@ Game.prototype.gameStop = function() {
     $('.final-result').html('POINTS: ' + this.time);
 
     setTimeout(
-        function() {
+        function () {
             this.time = 0;
             $('.result').html('POINTS: ' + this.time);
 
@@ -180,18 +186,20 @@ function collide(objOne, objTwo) {
     }
 }
 
-function addObstacles(time) {
-    if (time === 15) {
-        setTimeout(function() {
-            $('.grass-thin').css('display', 'block');
-        }, 5500);
-    } else if (time === 30) {
-        setTimeout(function() {
-            $('.grass-big-second').css('display', 'block');
-        }, 1700);
-    } else if (time === 45) {
-        setTimeout(function() {
-            $('.grass-double').css('display', 'block');
-        }, 200);
+
+
+document.addEventListener('keyup', function (event) {
+    var key =  event.keyCode;
+
+    if (key === 80) {
+        console.log("key presssed");
+        var ostrich = $('.ostrich-moving');
+        var birdX = ostrich.offset().left;
+        var birdY = ostrich.offset().top;
+        $('.tree').css('left',birdX);
+        $('.tree').css('top',birdY);
+        $('.tree').css('display', 'block');
+        setTimeout(function(){ $('.tree').css('display', 'none'); }, 1000);
+
     }
-}
+});
