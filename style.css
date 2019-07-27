@@ -155,7 +155,7 @@ button:focus {
 }
 
 .city-img {
-    background: url(./img/background.png);
+    background: url(./img/desert_bg.jpg);
     background-size: cover;
     height: 100vh;
 }
@@ -303,4 +303,17 @@ i {
 
 .plastic-4 {
     height: 45px;
+}
+
+.tree {
+    animation: disappear 10s forwards;
+}
+
+@keyframes disappear {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
 }

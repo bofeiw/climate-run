@@ -9,6 +9,12 @@ var Game = function () {
     this.canPlay = false;
 
     this.lastLostLife = 0;
+    this.audioStarted = false;
+};
+
+Game.prototype.addLives =function () {
+    this.lives++;
+    $('.lives').html(this.lives);
 };
 var lives = 3;
 var ostrich = document.getElementsByClassName('ostrich-moving')[0];
@@ -45,6 +51,16 @@ Game.prototype.startCountingScore = function () {
     );
 };
 
+Game.prototype.startAudio = function () {
+    if (! this.audioStarted) {
+        this.audioStarted = true;
+        this.audio = new Audio('./sound/music.mp3');
+        this.audio.play();
+        this.audio.volume = 0.14;
+        this.audio.loop = true;
+    }
+};
+
 Game.prototype.startMoving = function () {
     $('.ostrich-standing').addClass('hidden');
     $('.ostrich-moving').removeClass('hidden');
@@ -53,13 +69,8 @@ Game.prototype.startMoving = function () {
     $('.plastic').css('display', 'block');
     this.sceneMoving = true;
 
-    this.audio = new Audio('./sound/music.mp3');
-    this.audio.play();
-    this.audio.volume = 0.14;
-    this.audio.loop = true;
-
-    setTimeout(function() {
-        $('.plastic-1').css('display', 'block');
+    setTimeout(function () {
+        $('.grass-big').css('display', 'block');
     }, 4000);
 
     this.eggInterval = setInterval(function () {
@@ -117,8 +128,8 @@ Game.prototype.collisionCheck = function () {
 
             if (collide(ostrich, eggBonus)) {
                 this.lastLostLife = currentTime;
-                lives++;
-                $('.lives').html(lives);
+                this.lives++;
+                $('.lives').html(this.lives);
                 $('.egg').css('display', 'none');
 
                 this.bonus = new Audio('./sound/bonus.mp3');
@@ -266,13 +277,14 @@ function collide(objOne, objTwo) {
     }
 }
 
-function createTree(x) {
+function createTree(x, game) {
     const tree = $(`<img alt="tree" src="img/tree.png" class="tree">`);
     tree.css({left: x});
+    game.addLives();
     return tree;
 }
 
-function plantTree() {
+function plantTree(game) {
     // console.log("pantTree");
     const ostrich = $('.ostrich-moving');
     const deserts = $('.desert');
@@ -282,7 +294,7 @@ function plantTree() {
         const desertTrue = $(`#${desert.id}`);
         if (collide(ostrich, desertTrue)) {
             desertTrue.remove();
-            $('#game').append(createTree(ostrich.position().left));
+            $('#game').append(createTree(ostrich.position().left, game));
             return;
         }
     }
@@ -294,7 +306,7 @@ function plantTree() {
         const desertTrue = $(`#${desert.id}`);
         if (collide(ostrich, desertTrue)) {
             desertTrue.remove();
-            $('#game').append(createTree(ostrich.position().left));
+            $('#game').append(createTree(ostrich.position().left, game));
             return;
         }
     }
