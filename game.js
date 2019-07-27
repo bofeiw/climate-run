@@ -78,7 +78,7 @@ Game.prototype.collisionCheck = function () {
             }
 
             var ostrich = $('.ostrich-moving');
-            var smallGrass = $('.grass-small');
+            var plastic = $('.grass-small');
             var bigGrass = $('.grass-big');
             var thinGrass = $('.grass-thin');
             var bigGrassSecond = $('.grass-big-second');
@@ -101,20 +101,19 @@ Game.prototype.collisionCheck = function () {
                 this.bonus.play();
                 this.bonus.volume = 0.6;
             } else if (
-                collide(ostrich, smallGrass) ||
-                collide(ostrich, bigGrass) ||
-                collide(ostrich, bigGrassSecond) ||
-                collide(ostrich, thinGrass) ||
-                collide(ostrich, doubleGrass)
+                collide(ostrich, plastic)
+                // collide(ostrich, bigGrass) ||
+                // collide(ostrich, bigGrassSecond) ||
+                // collide(ostrich, thinGrass) ||
+                // collide(ostrich, doubleGrass)
             ) {
                 this.lastLostLife = currentTime;
-                this.lives--;
+                //this.lives--;
                 $('.lives').html(this.lives);
-                $('.ostrich-moving').addClass('lose-life');
-
-                this.failure = new Audio('./sound/life-lost.mp3');
-                this.failure.play();
-                this.failure.volume = 0.2;
+                $('.grass-small').css('display', 'none')
+                //this.failure = new Audio('./sound/life-lost.mp3');
+                //this.failure.play();
+                //this.failure.volume = 0.2;
 
                 setTimeout(
                     function () {
@@ -127,6 +126,15 @@ Game.prototype.collisionCheck = function () {
                     this.gameStop();
                 }
             }
+			// else if(this.lives == 0) {
+			// 	this.lastLostLife = currentTime;
+            //     $('.lives').html(this.lives);
+            //     $('.ostrich-moving').addClass('lose-life');
+			//
+			// 	this.failure = new Audio('./sound/life-lost.mp3');
+            //     this.failure.play();
+            //     this.failure.volume = 0.2;
+			// }
         }.bind(this),
         50
     );
