@@ -217,7 +217,7 @@ function plantTree() {
         const desert = deserts[i];
         // console.log(desert.id);
         const desertTrue = $(desert.id);
-        if (collision(ostrich, desertTrue)) {
+        if (collide(ostrich, desertTrue)) {
             desertTrue.remove();
             $('#game').append(createTree(ostrich.position().left));
             return;
