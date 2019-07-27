@@ -189,8 +189,8 @@ function plantTree() {
     for (let i = 0; i < deserts.length; ++i) {
         const desert = deserts[i];
         // console.log(desert.id);
-        const desertTrue = $(`#${id}`);
-        if (collision(ostrich, desertTrue)) {
+        const desertTrue = $(`#${desert.id}`);
+        if (collide(ostrich, desertTrue)) {
             desertTrue.remove();
             $('#game').append(createTree(ostrich.position().left));
             return;
