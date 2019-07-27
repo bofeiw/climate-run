@@ -100,11 +100,12 @@ Game.prototype.collisionCheck = function () {
                 this.bonus.play();
                 this.bonus.volume = 0.6;
             } else if (
-                collide(ostrich, smallGrass) ||
-                collide(ostrich, bigGrass) ||
-                collide(ostrich, bigGrassSecond) ||
-                collide(ostrich, thinGrass) ||
-                collide(ostrich, doubleGrass)
+                1 == 0
+                // collide(ostrich, smallGrass) ||
+                // collide(ostrich, bigGrass) ||
+                // collide(ostrich, bigGrassSecond) ||
+                // collide(ostrich, thinGrass) ||
+                // !collide(ostrich, doubleGrass)
             ) {
                 this.lastLostLife = currentTime;
                 this.lives--;
@@ -215,7 +216,7 @@ function plantTree() {
     for (let i = 0; i < deserts.length; ++i) {
         const desert = deserts[i];
         // console.log(desert.id);
-        const desertTrue = $(`#${id}`);
+        const desertTrue = $(desert.id);
         if (collision(ostrich, desertTrue)) {
             desertTrue.remove();
             $('#game').append(createTree(ostrich.position().left));
