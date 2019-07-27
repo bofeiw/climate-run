@@ -57,7 +57,7 @@
         background-position: 0 0;
     }
     to {
-        background-position: -455000px 0;
+        background-position: 455000px 0;
     }
 }
 
@@ -265,7 +265,6 @@ i {
     right: -1vw;
     border: 5px solid #000;
     border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-    animation: Move 6s infinite linear;
     display: none;
 }
 
@@ -278,7 +277,6 @@ i {
     bottom: 14vh;
     right: -1vw;
     display: none;
-    animation: Move 7.3s infinite linear;
 }
 
 .grass-small {
