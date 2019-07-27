@@ -26,18 +26,6 @@ var pos2= Math.trunc((Math.random()*100)%100);
 var pos3 = Math.trunc((Math.random()*100)%100);
 var pos4 = Math.trunc((Math.random()*100)%100);
 
-Game.prototype.moveLeft = function() {
-	if(x>= 0)
-		x -= movement_speed;
-	ostrich.style.left = x +"vw";
-}
-
-Game.prototype.moveRight = function() {
-	if(x <= 90)
-		x += movement_speed;
-	ostrich.style.left = x +"vw";
-}
-
 Game.prototype.startCountingScore = function () {
     this.counter = setInterval(
         function () {
@@ -95,16 +83,28 @@ Game.prototype.moveLeft = function () {
     const ostrich = $('.ostrich-moving');
     const position = ostrich.position();
     const x = position.left;
+
+    if(x <= 0) {
+        return;
+    }
+
     const nextX = x - speed;
     ostrich.css({left: nextX});
+    ostrich.addClass('flip-left');
 };
 
 Game.prototype.moveRight = function () {
     const ostrich = $('.ostrich-moving');
     const position = ostrich.position();
+
     const x = position.left;
+    if(x >= window.innerWidth - 176) {
+        return;
+    }
+
     const nextX = x + speed;
     ostrich.css({left: nextX});
+    ostrich.removeClass('flip-left');
 };
 
 Game.prototype.collisionCheck = function () {

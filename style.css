@@ -317,3 +317,7 @@ i {
         opacity: 0;
     }
 }
+
+.flip-left {
+    transform: scaleX(-1);
+}
