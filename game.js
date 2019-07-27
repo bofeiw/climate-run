@@ -108,7 +108,7 @@ Game.prototype.collisionCheck = function () {
                 collide(ostrich, doubleGrass)
             ) {
                 this.lastLostLife = currentTime;
-                this.lives--;
+                //this.lives--;
                 $('.lives').html(this.lives);
                 $('.ostrich-moving').addClass('lose-life');
 

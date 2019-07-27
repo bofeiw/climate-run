@@ -39,6 +39,16 @@ $(document).ready(function() {
     $(window).on('keydown', function(evt) {
         if (game.canPlay) {
             switch (evt.which) {
+                case 37:
+                    // left
+                    console.log("left");
+                    game.moveLeft();
+                    break;
+                case 39:
+                    // right
+                    console.log("right");
+                    game.moveRight();
+                    break;
                 case 32:
                     evt.preventDefault();
                     if (game.sceneMoving) {
@@ -49,15 +59,17 @@ $(document).ready(function() {
                         game.collisionCheck();
                     }
                     break;
-                case 37:
-                    // left
-                    console.log("left");
-                    game.moveLeft();
-                    break;
-                case 39:
-                    // right
-                    console.log("right");
-                    game.moveRight();
+                case 40:
+                    //const limitRight = $(window).width();
+                    //const x = Math.random() * limitRight;
+                    const position = $('.ostrich-moving').position();
+                    const x = position.left;
+                    const tree = $(`<img alt="tree" src="img/tree.png" class="tree">`);
+                    tree.css({left: x});
+                    $('#game').append(tree);
+                    setTimeout(function () {
+                        $('.tree').css('display', 'none');
+                    }, 1000);
                     break;
                 default:
                     console.log('Unsupported key was pressed.');
