@@ -247,22 +247,4 @@ function addObstacles(time) {
         const co2 = createCO2(x);
         $('#game').append(co2);
     }
-    const game = $('#game');
-    const newDesert = createDessert(x);
-    game.append(newDesert);
-    // let foundEmptySpace = false;
-    // while (! foundEmptySpace) {
-    //     const deserts = $('.desert');
-    //     for (let i = 0; i < deserts.length; ++i) {
-    //         const desert = deserts[i];
-    //         const desertTrue = $(`#${desert.id}`);
-    //         if (collide(newDesert, desertTrue)) {
-    //             newDesert.remove();
-    //             break;
-    //         } else {
-    //             foundEmptySpace = true;
-    //         }
-    //     }
-    //     break;
-    // }
 }
