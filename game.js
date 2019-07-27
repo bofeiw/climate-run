@@ -1,6 +1,7 @@
 const speed = 30;
 
 id = 0;
+let co2idPrefix = "co2";
 
 var Game = function () {
     this.time = 0;
@@ -229,11 +230,22 @@ function createDessert(x) {
     return desert;
 }
 
+function createCO2(x) {
+    const co2 = $(`<img alt="co2" src="img/co2.png" class="co2" id="co2idPrefix" + "${id}">`);
+    co2.css({left: x + 50});
+    return co2;
+}
+
+
 function addObstacles(time) {
     const limitRight = $(window).width();
     const x = Math.random() * limitRight;
     const desert = createDessert(x);
     $('#game').append(desert);
+    if(time % 2 == 0){
+        const co2 = createCO2(x);
+        $('#game').append(co2);
+    }
 }
 
 // https://stackoverflow.com/a/5541252/9494810
