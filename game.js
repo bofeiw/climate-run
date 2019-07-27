@@ -1,3 +1,8 @@
+const speed = 30;
+
+id = 0;
+let co2idPrefix = "co2";
+
 var Game = function () {
     this.time = 0;
     this.sceneMoving = false;
@@ -11,7 +16,7 @@ Game.prototype.startCountingScore = function () {
         function () {
             this.time++;
             $('.result').html('POINTS: ' + this.time);
-            if (Math.random() > 0.8) {
+            if (Math.random() > 0.7) {
                 addObstacles(this.time);
             }
         }.bind(this),
@@ -57,7 +62,7 @@ Game.prototype.moveLeft = function () {
     const ostrich = $('.ostrich-moving');
     const position = ostrich.position();
     const x = position.left;
-    const nextX = x - 5;
+    const nextX = x - speed;
     ostrich.css({left: nextX});
 };
 
@@ -65,7 +70,7 @@ Game.prototype.moveRight = function () {
     const ostrich = $('.ostrich-moving');
     const position = ostrich.position();
     const x = position.left;
-    const nextX = x + 5;
+    const nextX = x + speed;
     ostrich.css({left: nextX});
 };
 
@@ -85,12 +90,6 @@ Game.prototype.collisionCheck = function () {
             var eggBonus = $('.egg');
             var doubleGrass = $('.grass-double');
 
-            const deserts = $('.desert');
-            for (const desert in deserts) {
-                // $(`#${desert.id}`).remove();
-            }
-            console.log(deserts);
-
             if (collide(ostrich, eggBonus)) {
                 this.lastLostLife = currentTime;
                 this.lives++;
@@ -101,11 +100,12 @@ Game.prototype.collisionCheck = function () {
                 this.bonus.play();
                 this.bonus.volume = 0.6;
             } else if (
-                collide(ostrich, smallGrass) ||
-                collide(ostrich, bigGrass) ||
-                collide(ostrich, bigGrassSecond) ||
-                collide(ostrich, thinGrass) ||
-                collide(ostrich, doubleGrass)
+                1 == 0
+                // collide(ostrich, smallGrass) ||
+                // collide(ostrich, bigGrass) ||
+                // collide(ostrich, bigGrassSecond) ||
+                // collide(ostrich, thinGrass) ||
+                // !collide(ostrich, doubleGrass)
             ) {
                 this.lastLostLife = currentTime;
                 this.lives--;
@@ -203,21 +203,49 @@ function collide(objOne, objTwo) {
     }
 }
 
-function plantTree() {
-
+function createTree(x) {
+    const tree = $(`<img alt="tree" src="img/tree.png" class="tree">`);
+    tree.css({left: x});
+    return tree;
 }
 
-let id = 0;
-let co2idPrefix = "co2";
+function plantTree() {
+    // console.log("pantTree");
+    const ostrich = $('.ostrich-moving');
+    const deserts = $('.desert');
+    for (let i = 0; i < deserts.length; ++i) {
+        const desert = deserts[i];
+        // console.log(desert.id);
+        const desertTrue = $(`#${desert.id}`);
+        if (collide(ostrich, desertTrue)) {
+            desertTrue.remove();
+            $('#game').append(createTree(ostrich.position().left));
+            return;
+        }
+    }
+
+    const co2 = $('.co2');
+    for (let i = 0; i < co2.length; ++i) {
+        const desert = co2[i];
+        // console.log(desert.id);
+        const desertTrue = $(`#${desert.id}`);
+        if (collide(ostrich, desertTrue)) {
+            desertTrue.remove();
+            $('#game').append(createTree(ostrich.position().left));
+            return;
+        }
+    }
+    
+}
+
 function createDessert(x) {
-    const desert = $(`<img alt="desert" src="img/desert.png" class="desert" id="${id}">`);
-    ++id;
+    const desert = $(`<img alt="desert" src="img/desert.png" class="desert" id=${++id}>`);
     desert.css({left: x});
     return desert;
 }
 
 function createCO2(x) {
-    const co2 = $(`<img alt="desert" src="img/co2.png" class="desert" id="co2idPrefix" + "${id}">`);
+    const co2 = $(`<img alt="co2" src="img/co2.png" class="co2" id=${++id}>`);
     co2.css({left: x + 50});
     return co2;
 }
@@ -228,5 +256,8 @@ function addObstacles(time) {
     const desert = createDessert(x);
     const co2 = createCO2(x);
     $('#game').append(desert);
-    $('#game').append(co2);
+    if(Math.random() > 0.7){
+        const co2 = createCO2(x);
+        $('#game').append(co2);
+    }
 }

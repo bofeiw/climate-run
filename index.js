@@ -1,5 +1,8 @@
 $(document).ready(function() {
     var game = new Game();
+    game.startCountingScore();
+    game.startMoving();
+    game.collisionCheck();
 
     $('html, body').animate(
         {
@@ -40,23 +43,15 @@ $(document).ready(function() {
         if (game.canPlay) {
             switch (evt.which) {
                 case 32:
-                    evt.preventDefault();
-                    if (game.sceneMoving) {
-                        game.jumping();
-                    } else {
-                        game.startCountingScore();
-                        game.startMoving();
-                        game.collisionCheck();
-                    }
+                    // space
+                    plantTree();
                     break;
                 case 37:
                     // left
-                    console.log("left");
                     game.moveLeft();
                     break;
                 case 39:
                     // right
-                    console.log("right");
                     game.moveRight();
                     break;
                 default:
