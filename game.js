@@ -1,4 +1,9 @@
-var Game = function() {
+const speed = 30;
+
+id = 0;
+let co2idPrefix = "co2";
+
+var Game = function () {
     this.time = 0;
     this.sceneMoving = false;
     this.canPlay = false;
@@ -8,7 +13,7 @@ var Game = function() {
 var lives = 3;
 var ostrich = document.getElementsByClassName('ostrich-moving')[0];
 var x = 40;// set x to 40
-var speed = 1;
+var movement_speed = 1;
 var pos = Math.trunc((Math.random()*100)%100);
 var pos1 = Math.trunc((Math.random()*100)%100);
 var pos2= Math.trunc((Math.random()*100)%100);
@@ -17,31 +22,33 @@ var pos4 = Math.trunc((Math.random()*100)%100);
 
 Game.prototype.moveLeft = function() {
 	if(x>= 0)
-		x -= speed;
+		x -= movement_speed;
 	ostrich.style.left = x +"vw";
 }
 
 Game.prototype.moveRight = function() {
 	if(x <= 90)
-		x += speed;
+		x += movement_speed;
 	ostrich.style.left = x +"vw";
 }
 
-Game.prototype.startCountingScore = function() {
+Game.prototype.startCountingScore = function () {
     this.counter = setInterval(
-        function() {
+        function () {
             this.time++;
             $('.result').html('POINTS: ' + this.time);
-
-            addObstacles(this.time);
+            if (Math.random() > 0.7) {
+                addObstacles(this.time);
+            }
         }.bind(this),
         1000
     );
 };
 
-Game.prototype.startMoving = function() {
+Game.prototype.startMoving = function () {
     $('.ostrich-standing').addClass('hidden');
     $('.ostrich-moving').removeClass('hidden');
+
     $('.city-img').css('animation', 'none');
     $('.plastic').css('display', 'block');
     this.sceneMoving = true;
@@ -55,27 +62,43 @@ Game.prototype.startMoving = function() {
         $('.plastic-1').css('display', 'block');
     }, 4000);
 
-    this.eggInterval = setInterval(function() {
+    this.eggInterval = setInterval(function () {
         $('.egg').css('display', 'block');
-        setTimeout(function() {
+        setTimeout(function () {
             $('.egg').css('display', 'none');
         }, 6500);
     }, 14000);
 };
 
-Game.prototype.jumping = function() {
+Game.prototype.jumping = function () {
     if (!$('.ostrich-moving').hasClass('jump')) {
         $('.ostrich-moving').addClass('jump');
 
-        setTimeout(function() {
+        setTimeout(function () {
             $('.ostrich-moving').removeClass('jump');
         }, 1000);
     }
 };
 
-Game.prototype.collisionCheck = function() {
+Game.prototype.moveLeft = function () {
+    const ostrich = $('.ostrich-moving');
+    const position = ostrich.position();
+    const x = position.left;
+    const nextX = x - speed;
+    ostrich.css({left: nextX});
+};
+
+Game.prototype.moveRight = function () {
+    const ostrich = $('.ostrich-moving');
+    const position = ostrich.position();
+    const x = position.left;
+    const nextX = x + speed;
+    ostrich.css({left: nextX});
+};
+
+Game.prototype.collisionCheck = function () {
     this.collideInterval = setInterval(
-        function() {
+        function () {
             var currentTime = new Date().getTime();
             if (currentTime - this.lastLostLife < 1000) {
                 return;
@@ -118,7 +141,7 @@ Game.prototype.collisionCheck = function() {
 				this.lastLostLife = currentTime;
 				$('.plastic-1').css('display', 'none')
                 setTimeout(
-                    function() {
+                    function () {
                         $('.ostrich-moving').removeClass('lose-life');
 
                     }.bind(this),
@@ -172,7 +195,7 @@ Game.prototype.collisionCheck = function() {
     );
 };
 
-Game.prototype.gameStop = function() {
+Game.prototype.gameStop = function () {
     this.canPlay = false;
     this.sceneMoving = false;
     clearInterval(this.collideInterval);
@@ -189,7 +212,7 @@ Game.prototype.gameStop = function() {
     $('.egg').css('display', 'none');
     clearInterval(this.eggInterval);
 
-    setTimeout(function() {
+    setTimeout(function () {
         $('.game').css({
             transform: 'translateY(-100%)'
         });
@@ -203,7 +226,7 @@ Game.prototype.gameStop = function() {
     $('.final-result').html('POINTS: ' + this.time);
 
     setTimeout(
-        function() {
+        function () {
             this.time = 0;
             $('.result').html('POINTS: ' + this.time);
 
@@ -243,7 +266,55 @@ function collide(objOne, objTwo) {
     }
 }
 
+function createTree(x) {
+    const tree = $(`<img alt="tree" src="img/tree.png" class="tree">`);
+    tree.css({left: x});
+    return tree;
+}
+
+function plantTree() {
+    // console.log("pantTree");
+    const ostrich = $('.ostrich-moving');
+    const deserts = $('.desert');
+    for (let i = 0; i < deserts.length; ++i) {
+        const desert = deserts[i];
+        // console.log(desert.id);
+        const desertTrue = $(`#${desert.id}`);
+        if (collide(ostrich, desertTrue)) {
+            desertTrue.remove();
+            $('#game').append(createTree(ostrich.position().left));
+            return;
+        }
+    }
+
+    const co2 = $('.co2');
+    for (let i = 0; i < co2.length; ++i) {
+        const desert = co2[i];
+        // console.log(desert.id);
+        const desertTrue = $(`#${desert.id}`);
+        if (collide(ostrich, desertTrue)) {
+            desertTrue.remove();
+            $('#game').append(createTree(ostrich.position().left));
+            return;
+        }
+    }
+
+}
+
+function createDessert(x) {
+    const desert = $(`<img alt="desert" src="img/desert.png" class="desert" id=${++id}>`);
+    desert.css({left: x});
+    return desert;
+}
+
+function createCO2(x) {
+    const co2 = $(`<img alt="co2" src="img/co2.png" class="co2" id=${++id}>`);
+    co2.css({left: x + 50});
+    return co2;
+}
+
 function addObstacles(time) {
+
     if (time%5 === 3) {
 
         setTimeout(function() {
@@ -292,5 +363,14 @@ function addObstacles(time) {
 			$('.plastic-4').css('right', pos3+"vw");
             $('.plastic-4').css('display', 'block');
         }, 200);
+	}
+    const limitRight = $(window).width();
+    const x = Math.random() * limitRight;
+    const desert = createDessert(x);
+    const co2 = createCO2(x);
+    $('#game').append(desert);
+    if(Math.random() > 0.7){
+        const co2 = createCO2(x);
+        $('#game').append(co2);
     }
 }

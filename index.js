@@ -1,5 +1,8 @@
 $(document).ready(function() {
     var game = new Game();
+    game.startCountingScore();
+    game.startMoving();
+    game.collisionCheck();
 
     $('html, body').animate(
         {
@@ -40,21 +43,17 @@ $(document).ready(function() {
         if (game.canPlay) {
             switch (evt.which) {
                 case 32:
-                    evt.preventDefault();
-                    if (game.sceneMoving) {
-                        game.jumping();
-                    } else {
-                        game.startCountingScore();
-                        game.startMoving();
-                        game.collisionCheck();
-                    }
+                    // space
+                    plantTree();
                     break;
-				case 37:
-					game.moveLeft();
-					break;
-				case 39:
-					game.moveRight();
-					break;
+                case 37:
+                    // left
+                    game.moveLeft();
+                    break;
+                case 39:
+                    // right
+                    game.moveRight();
+                    break;
                 default:
                     console.log('Unsupported key was pressed.');
             }

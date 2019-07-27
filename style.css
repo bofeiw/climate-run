@@ -57,7 +57,7 @@
         background-position: 0 0;
     }
     to {
-        background-position: -455000px 0;
+        background-position: 455000px 0;
     }
 }
 
@@ -87,7 +87,7 @@
 body {
     margin: 0;
     font-family: 'Lato', sans-serif;
-    overflow-y: hidden;
+    overflow: hidden;
 }
 
 .start-screen,
@@ -265,9 +265,9 @@ i {
     right: -1vw;
     border: 5px solid #000;
     border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-    animation: Move 6s infinite linear;
     display: none;
 }
+
 
 .plastic,
 .plastic-1,
@@ -279,7 +279,13 @@ i {
     right: 10vw;
     display: none;
     animation: none;
+}
 
+.co2,
+.tree,
+.desert {
+    position: absolute;
+    bottom: 12vh;
 }
 
 .plastic {
