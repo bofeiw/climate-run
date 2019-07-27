@@ -87,7 +87,7 @@
 body {
     margin: 0;
     font-family: 'Lato', sans-serif;
-    overflow-y: hidden;
+    overflow: hidden;
 }
 
 .start-screen,
