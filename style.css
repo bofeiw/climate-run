@@ -268,15 +268,14 @@ i {
     display: none;
 }
 
+.desert,
 .grass-small,
 .grass-big,
 .grass-big-second,
 .grass-thin,
 .grass-double {
     position: absolute;
-    bottom: 14vh;
-    right: -1vw;
-    display: none;
+    bottom: 12vh;
 }
 
 .grass-small {

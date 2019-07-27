@@ -1,4 +1,4 @@
-var Game = function() {
+var Game = function () {
     this.time = 0;
     this.sceneMoving = false;
     this.canPlay = false;
@@ -6,19 +6,20 @@ var Game = function() {
     this.lastLostLife = 0;
 };
 
-Game.prototype.startCountingScore = function() {
+Game.prototype.startCountingScore = function () {
     this.counter = setInterval(
-        function() {
+        function () {
             this.time++;
             $('.result').html('POINTS: ' + this.time);
-
-            addObstacles(this.time);
+            if (Math.random() > 0.8) {
+                addObstacles(this.time);
+            }
         }.bind(this),
         1000
     );
 };
 
-Game.prototype.startMoving = function() {
+Game.prototype.startMoving = function () {
     $('.ostrich-standing').addClass('hidden');
     $('.ostrich-moving').removeClass('hidden');
     // $('.city-img').css('animation', 'Slide 2500s linear infinite');
@@ -30,29 +31,29 @@ Game.prototype.startMoving = function() {
     this.audio.volume = 0.14;
     this.audio.loop = true;
 
-    setTimeout(function() {
+    setTimeout(function () {
         $('.grass-big').css('display', 'block');
     }, 4000);
 
-    this.eggInterval = setInterval(function() {
+    this.eggInterval = setInterval(function () {
         $('.egg').css('display', 'block');
-        setTimeout(function() {
+        setTimeout(function () {
             $('.egg').css('display', 'none');
         }, 6500);
     }, 14000);
 };
 
-Game.prototype.jumping = function() {
+Game.prototype.jumping = function () {
     if (!$('.ostrich-moving').hasClass('jump')) {
         $('.ostrich-moving').addClass('jump');
 
-        setTimeout(function() {
+        setTimeout(function () {
             $('.ostrich-moving').removeClass('jump');
         }, 1000);
     }
 };
 
-Game.prototype.moveLeft = function() {
+Game.prototype.moveLeft = function () {
     const ostrich = $('.ostrich-moving');
     const position = ostrich.position();
     const x = position.left;
@@ -60,7 +61,7 @@ Game.prototype.moveLeft = function() {
     ostrich.css({left: nextX});
 };
 
-Game.prototype.moveRight = function() {
+Game.prototype.moveRight = function () {
     const ostrich = $('.ostrich-moving');
     const position = ostrich.position();
     const x = position.left;
@@ -68,9 +69,9 @@ Game.prototype.moveRight = function() {
     ostrich.css({left: nextX});
 };
 
-Game.prototype.collisionCheck = function() {
+Game.prototype.collisionCheck = function () {
     this.collideInterval = setInterval(
-        function() {
+        function () {
             var currentTime = new Date().getTime();
             if (currentTime - this.lastLostLife < 1000) {
                 return;
@@ -83,6 +84,12 @@ Game.prototype.collisionCheck = function() {
             var bigGrassSecond = $('.grass-big-second');
             var eggBonus = $('.egg');
             var doubleGrass = $('.grass-double');
+
+            const deserts = $('.desert');
+            for (const desert in deserts) {
+                // $(`#${desert.id}`).remove();
+            }
+            console.log(deserts);
 
             if (collide(ostrich, eggBonus)) {
                 this.lastLostLife = currentTime;
@@ -110,7 +117,7 @@ Game.prototype.collisionCheck = function() {
                 this.failure.volume = 0.2;
 
                 setTimeout(
-                    function() {
+                    function () {
                         $('.ostrich-moving').removeClass('lose-life');
                     }.bind(this),
                     1000
@@ -125,7 +132,7 @@ Game.prototype.collisionCheck = function() {
     );
 };
 
-Game.prototype.gameStop = function() {
+Game.prototype.gameStop = function () {
     this.canPlay = false;
     this.sceneMoving = false;
     clearInterval(this.collideInterval);
@@ -142,7 +149,7 @@ Game.prototype.gameStop = function() {
     $('.egg').css('display', 'none');
     clearInterval(this.eggInterval);
 
-    setTimeout(function() {
+    setTimeout(function () {
         $('.game').css({
             transform: 'translateY(-100%)'
         });
@@ -156,7 +163,7 @@ Game.prototype.gameStop = function() {
     $('.final-result').html('POINTS: ' + this.time);
 
     setTimeout(
-        function() {
+        function () {
             this.time = 0;
             $('.result').html('POINTS: ' + this.time);
 
@@ -196,18 +203,21 @@ function collide(objOne, objTwo) {
     }
 }
 
+function plantTree() {
+
+}
+
+let id = 0;
+function createDessert(x) {
+    const desert = $(`<img alt="desert" src="img/desert.png" class="desert" id="${id}">`);
+    ++id;
+    desert.css({left: x});
+    return desert;
+}
+
 function addObstacles(time) {
-    if (time === 15) {
-        setTimeout(function() {
-            $('.grass-thin').css('display', 'block');
-        }, 5500);
-    } else if (time === 30) {
-        setTimeout(function() {
-            $('.grass-big-second').css('display', 'block');
-        }, 1700);
-    } else if (time === 45) {
-        setTimeout(function() {
-            $('.grass-double').css('display', 'block');
-        }, 200);
-    }
+    const limitRight = $(window).width();
+    const x = Math.random() * limitRight;
+    const desert = createDessert(x);
+    $('#game').append(desert);
 }
