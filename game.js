@@ -208,6 +208,7 @@ function plantTree() {
 }
 
 let id = 0;
+let co2idPrefix = "co2";
 function createDessert(x) {
     const desert = $(`<img alt="desert" src="img/desert.png" class="desert" id="${id}">`);
     ++id;
@@ -215,9 +216,17 @@ function createDessert(x) {
     return desert;
 }
 
+function createCO2(x) {
+    const co2 = $(`<img alt="desert" src="img/co2.png" class="desert" id="co2idPrefix" + "${id}">`);
+    co2.css({left: x + 50});
+    return co2;
+}
+
 function addObstacles(time) {
     const limitRight = $(window).width();
     const x = Math.random() * limitRight;
     const desert = createDessert(x);
+    const co2 = createCO2(x);
     $('#game').append(desert);
+    $('#game').append(co2);
 }
