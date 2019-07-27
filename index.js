@@ -26,17 +26,7 @@ $(document).ready(function() {
     });
 
     $('.btn-restart').click(() => {
-        setTimeout(function() {
-            game.canPlay = true;
-        }, 750);
-
-        $('.game').css({
-            transform: 'translateY(0)'
-        });
-
-        $('.game-over').css({
-            transform: 'translateY(100%)'
-        });
+        location.reload();
     });
 
     $(window).on('keydown', function(evt) {

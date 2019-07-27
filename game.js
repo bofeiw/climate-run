@@ -7,7 +7,7 @@ var Game = function () {
     this.time = 0;
     this.sceneMoving = false;
     this.canPlay = false;
-    this.lives = 3;
+    this.lives = 30;
     this.lastLostLife = 0;
     this.audioStarted = false;
 };
@@ -43,7 +43,7 @@ Game.prototype.startCountingScore = function () {
         function () {
             this.time++;
             $('.result').html('POINTS: ' + this.time);
-            if (Math.random() > 0.7) {
+            if (Math.random() > 0.5) {
                 addObstacles(this.time, this);
             }
         }.bind(this),
@@ -241,7 +241,7 @@ Game.prototype.gameStop = function () {
             this.time = 0;
             $('.result').html('POINTS: ' + this.time);
 
-            this.lives = 3;
+            this.lives = 30;
             $('.lives').html(this.lives);
 
             $('.ostrich-down').addClass('hidden');
@@ -326,8 +326,8 @@ function createCO2(x) {
 }
 
 function addObstacles(time, game) {
-
-    if (time%5 === 3) {
+    console.log(time);
+    if (time%3 == 1) {
 
         setTimeout(function() {
 			pos = Math.trunc((Math.random()*100)%100);
@@ -335,43 +335,59 @@ function addObstacles(time, game) {
 			$('.ostrich-moving').removeClass('lose-life');
 			if($('.plastic').css('display')!=='none') {
 				$('.ostrich-moving').addClass('lose-life');
-				game.lives--;
+				game.lives -= 10;
                 $('.lives').html(game.lives);
 			}
 			$('.plastic').css('right', pos+"vw");
             $('.plastic').css('display', 'block');
         }, 5500);
-    } else if (time%10 === 7) {
+    }
+    if (time%3 == 2) {
         setTimeout(function() {
 			pos2 = Math.trunc((Math.random()*100)%100);
 
 			if($('.plastic-1').css('display')!=='none') {
 				$('.ostrich-moving').addClass('lose-life');
-				game.lives--;
+				game.lives -= 10;
 				$('.lives').html(game.lives);
 			}
 
 			$('.plastic-1').css('right', pos2+"vw");
             $('.plastic-1').css('display', 'block');
         }, 1700);
-    } else if (time%10 === 9) {
+    }
+    if (time%4 == 1) {
         setTimeout(function() {
 			pos2 = Math.trunc((Math.random()*100)%100);
-
+            if($('.plastic-2').css('display')!=='none') {
+                $('.ostrich-moving').addClass('lose-life');
+                game.lives -= 10;
+                $('.lives').html(game.lives);
+            }
 			$('.plastic-2').css('right', pos1+"vw");
             $('.plastic-2').css('display', 'block');
         }, 1700);
-    } else if (time%20 === 18) {
+    }
+    if (time%4 == 2) {
         setTimeout(function() {
 			pos4 = Math.trunc((Math.random()*100)%100);
-
+            if($('.plastic-3').css('display')!=='none') {
+                $('.ostrich-moving').addClass('lose-life');
+                game.lives -= 10;
+                $('.lives').html(game.lives);
+            }
 			$('.plastic-3').css('right', pos4+"vw");
             $('.plastic-3').css('display', 'block');
         }, 200);
-    } else if (time%10 === 4) {
+    }
+    if (time%4 == 0) {
         setTimeout(function() {
 			pos3 = Math.trunc((Math.random()*100)%100);
-
+            if($('.plastic-4').css('display')!=='none') {
+                $('.ostrich-moving').addClass('lose-life');
+                game.lives -= 10;
+                $('.lives').html(game.lives);
+            }
 			$('.plastic-4').css('right', pos3+"vw");
             $('.plastic-4').css('display', 'block');
         }, 200);
