@@ -61,12 +61,7 @@ Game.prototype.startMoving = function () {
         $('.grass-big').css('display', 'block');
     }, 4000);
 
-    this.eggInterval = setInterval(function () {
-        $('.egg').css('display', 'block');
-        setTimeout(function () {
-            $('.egg').css('display', 'none');
-        }, 6500);
-    }, 14000);
+    
 };
 
 Game.prototype.jumping = function () {
