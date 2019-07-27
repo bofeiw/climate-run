@@ -7,7 +7,7 @@ var Game = function () {
     this.time = 0;
     this.sceneMoving = false;
     this.canPlay = false;
-
+    this.lives = 3;
     this.lastLostLife = 0;
     this.audioStarted = false;
 };
@@ -16,7 +16,7 @@ Game.prototype.addLives =function () {
     this.lives++;
     $('.lives').html(this.lives);
 };
-var lives = 3;
+//var lives = 3;
 var ostrich = document.getElementsByClassName('ostrich-moving')[0];
 var x = 40;// set x to 40
 var movement_speed = 1;
@@ -44,7 +44,7 @@ Game.prototype.startCountingScore = function () {
             this.time++;
             $('.result').html('POINTS: ' + this.time);
             if (Math.random() > 0.7) {
-                addObstacles(this.time);
+                addObstacles(this.time, this);
             }
         }.bind(this),
         1000
@@ -124,7 +124,7 @@ Game.prototype.collisionCheck = function () {
 
             var eggBonus = $('.egg');
 
-			console.log(lives);
+			//console.log(lives);
 
             if (collide(ostrich, eggBonus)) {
                 this.lastLostLife = currentTime;
@@ -192,7 +192,7 @@ Game.prototype.collisionCheck = function () {
                     500
                 );
             }
-			if (lives <= 0) {
+			if (this.lives <= 0) {
 				this.lastLostLife = currentTime;
 				this.gameStop();
 
@@ -241,8 +241,8 @@ Game.prototype.gameStop = function () {
             this.time = 0;
             $('.result').html('POINTS: ' + this.time);
 
-            lives = 3;
-            $('.lives').html(lives);
+            this.lives = 3;
+            $('.lives').html(this.lives);
 
             $('.ostrich-down').addClass('hidden');
             $('.ostrich-standing').removeClass('hidden');
@@ -325,7 +325,7 @@ function createCO2(x) {
     return co2;
 }
 
-function addObstacles(time) {
+function addObstacles(time, game) {
 
     if (time%5 === 3) {
 
@@ -335,8 +335,8 @@ function addObstacles(time) {
 			$('.ostrich-moving').removeClass('lose-life');
 			if($('.plastic').css('display')!=='none') {
 				$('.ostrich-moving').addClass('lose-life');
-				lives--;
-                $('.lives').html(lives);
+				game.lives--;
+                $('.lives').html(game.lives);
 			}
 			$('.plastic').css('right', pos+"vw");
             $('.plastic').css('display', 'block');
@@ -347,8 +347,8 @@ function addObstacles(time) {
 
 			if($('.plastic-1').css('display')!=='none') {
 				$('.ostrich-moving').addClass('lose-life');
-				lives--;
-				$('.lives').html(lives);
+				game.lives--;
+				$('.lives').html(game.lives);
 			}
 
 			$('.plastic-1').css('right', pos2+"vw");
