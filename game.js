@@ -1,6 +1,7 @@
 const speed = 30;
 
 id = 0;
+let co2idPrefix = "co2";
 
 var Game = function () {
     this.time = 0;
@@ -45,6 +46,16 @@ Game.prototype.startMoving = function () {
             $('.egg').css('display', 'none');
         }, 6500);
     }, 14000);
+};
+
+Game.prototype.jumping = function () {
+    if (!$('.ostrich-moving').hasClass('jump')) {
+        $('.ostrich-moving').addClass('jump');
+
+        setTimeout(function () {
+            $('.ostrich-moving').removeClass('jump');
+        }, 1000);
+    }
 };
 
 Game.prototype.moveLeft = function () {
@@ -172,12 +183,14 @@ function createTree(x) {
 }
 
 function plantTree() {
+    // console.log("pantTree");
     const ostrich = $('.ostrich-moving');
     const deserts = $('.desert');
     for (let i = 0; i < deserts.length; ++i) {
         const desert = deserts[i];
-        const desertTrue = $(`#${desert.id}`);
-        if (collide(ostrich, desertTrue)) {
+        // console.log(desert.id);
+        const desertTrue = $(`#${id}`);
+        if (collision(ostrich, desertTrue)) {
             desertTrue.remove();
             $('#game').append(createTree(ostrich.position().left));
             return;
@@ -191,9 +204,22 @@ function createDessert(x) {
     return desert;
 }
 
+function createCO2(x) {
+    const co2 = $(`<img alt="co2" src="img/co2.png" class="co2" id="co2idPrefix" + "${id}">`);
+    co2.css({left: x + 50});
+    return co2;
+}
+
+
 function addObstacles(time) {
     const limitRight = $(window).width();
     const x = Math.random() * limitRight;
+    const desert = createDessert(x);
+    $('#game').append(desert);
+    if(time % 2 == 0){
+        const co2 = createCO2(x);
+        $('#game').append(co2);
+    }
     const game = $('#game');
     const newDesert = createDessert(x);
     game.append(newDesert);
