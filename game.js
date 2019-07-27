@@ -21,7 +21,7 @@ Game.prototype.startCountingScore = function() {
 Game.prototype.startMoving = function() {
     $('.ostrich-standing').addClass('hidden');
     $('.ostrich-moving').removeClass('hidden');
-    $('.city-img').css('animation', 'Slide 2500s linear infinite');
+    // $('.city-img').css('animation', 'Slide 2500s linear infinite');
     $('.grass-small').css('display', 'block');
     this.sceneMoving = true;
 
@@ -50,6 +50,22 @@ Game.prototype.jumping = function() {
             $('.ostrich-moving').removeClass('jump');
         }, 1000);
     }
+};
+
+Game.prototype.moveLeft = function() {
+    const ostrich = $('.ostrich-moving');
+    const position = ostrich.position();
+    const x = position.left;
+    const nextX = x - 5;
+    ostrich.css({left: nextX});
+};
+
+Game.prototype.moveRight = function() {
+    const ostrich = $('.ostrich-moving');
+    const position = ostrich.position();
+    const x = position.left;
+    const nextX = x + 5;
+    ostrich.css({left: nextX});
 };
 
 Game.prototype.collisionCheck = function() {
