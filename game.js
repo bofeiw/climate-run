@@ -223,6 +223,19 @@ function plantTree() {
             return;
         }
     }
+
+    const co2 = $('.co2');
+    for (let i = 0; i < co2.length; ++i) {
+        const desert = co2[i];
+        // console.log(desert.id);
+        const desertTrue = $(`#${desert.id}`);
+        if (collide(ostrich, desertTrue)) {
+            desertTrue.remove();
+            $('#game').append(createTree(ostrich.position().left));
+            return;
+        }
+    }
+    
 }
 
 function createDessert(x) {
@@ -232,7 +245,7 @@ function createDessert(x) {
 }
 
 function createCO2(x) {
-    const co2 = $(`<img alt="co2" src="img/co2.png" class="co2" id="co2idPrefix" + "${id}">`);
+    const co2 = $(`<img alt="co2" src="img/co2.png" class="co2" id=${++id}>`);
     co2.css({left: x + 50});
     return co2;
 }
@@ -243,7 +256,7 @@ function addObstacles(time) {
     const x = Math.random() * limitRight;
     const desert = createDessert(x);
     $('#game').append(desert);
-    if(time % 2 == 0){
+    if(Math.random() > 0.7){
         const co2 = createCO2(x);
         $('#game').append(co2);
     }
