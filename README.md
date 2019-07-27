@@ -1,2 +1,2 @@
-# devs-for-life
+# devs
 One player game
