@@ -220,6 +220,7 @@ function createCO2(x) {
     const co2 = $(`<img alt="desert" src="img/co2.png" class="desert" id="co2idPrefix" + "${id}">`);
     co2.css({left: x + 50});
     return co2;
+    return co2;
 }
 
 function addObstacles(time) {
