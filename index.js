@@ -49,6 +49,12 @@ $(document).ready(function() {
                         game.collisionCheck();
                     }
                     break;
+				case 37:
+					game.moveLeft();
+					break;
+				case 39:
+					game.moveRight();
+					break;
                 default:
                     console.log('Unsupported key was pressed.');
             }

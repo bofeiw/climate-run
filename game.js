@@ -6,6 +6,25 @@ var Game = function() {
     this.lastLostLife = 0;
 };
 
+var ostrich = document.getElementsByClassName('ostrich-moving')[0];
+var x = 40;// set x to 40
+var speed = 1;
+var gsmall = Math.trunc((Math.random()*100)%100);
+var gbig = Math.trunc((Math.random()*100)%100);
+var gbig2= Math.trunc((Math.random()*100)%100);
+var gthin = Math.trunc((Math.random()*100)%100);
+var gdouble = Math.trunc((Math.random()*100)%100);
+
+Game.prototype.moveLeft = function() {
+	x -= speed
+	ostrich.style.left = x +"vw";
+}
+
+Game.prototype.moveRight = function() {
+	x += speed
+	ostrich.style.left = x +"vw";
+}
+
 Game.prototype.startCountingScore = function() {
     this.counter = setInterval(
         function() {
@@ -21,7 +40,7 @@ Game.prototype.startCountingScore = function() {
 Game.prototype.startMoving = function() {
     $('.ostrich-standing').addClass('hidden');
     $('.ostrich-moving').removeClass('hidden');
-    $('.city-img').css('animation', 'Slide 2500s linear infinite');
+    $('.city-img').css('animation', 'none');
     $('.grass-small').css('display', 'block');
     this.sceneMoving = true;
 
@@ -61,7 +80,7 @@ Game.prototype.collisionCheck = function() {
             }
 
             var ostrich = $('.ostrich-moving');
-            var smallGrass = $('.grass-small');
+            var plastic = $('.grass-small');
             var bigGrass = $('.grass-big');
             var thinGrass = $('.grass-thin');
             var bigGrassSecond = $('.grass-big-second');
@@ -78,20 +97,19 @@ Game.prototype.collisionCheck = function() {
                 this.bonus.play();
                 this.bonus.volume = 0.6;
             } else if (
-                collide(ostrich, smallGrass) ||
-                collide(ostrich, bigGrass) ||
-                collide(ostrich, bigGrassSecond) ||
-                collide(ostrich, thinGrass) ||
-                collide(ostrich, doubleGrass)
+                collide(ostrich, plastic)
+                // collide(ostrich, bigGrass) ||
+                // collide(ostrich, bigGrassSecond) ||
+                // collide(ostrich, thinGrass) ||
+                // collide(ostrich, doubleGrass)
             ) {
                 this.lastLostLife = currentTime;
-                this.lives--;
+                //this.lives--;
                 $('.lives').html(this.lives);
-                $('.ostrich-moving').addClass('lose-life');
-
-                this.failure = new Audio('./sound/life-lost.mp3');
-                this.failure.play();
-                this.failure.volume = 0.2;
+                $('.grass-small').css('display', 'none')
+                //this.failure = new Audio('./sound/life-lost.mp3');
+                //this.failure.play();
+                //this.failure.volume = 0.2;
 
                 setTimeout(
                     function() {
@@ -104,6 +122,15 @@ Game.prototype.collisionCheck = function() {
                     this.gameStop();
                 }
             }
+			// else if(this.lives == 0) {
+			// 	this.lastLostLife = currentTime;
+            //     $('.lives').html(this.lives);
+            //     $('.ostrich-moving').addClass('lose-life');
+			//
+			// 	this.failure = new Audio('./sound/life-lost.mp3');
+            //     this.failure.play();
+            //     this.failure.volume = 0.2;
+			// }
         }.bind(this),
         50
     );
@@ -181,17 +208,54 @@ function collide(objOne, objTwo) {
 }
 
 function addObstacles(time) {
-    if (time === 15) {
+    if (time%5 === 3) {
+
         setTimeout(function() {
-            $('.grass-thin').css('display', 'block');
+			gsmall = Math.trunc((Math.random()*100)%100);
+
+			$('.ostrich-moving').removeClass('lose-life');
+			if($('.grass-small').css('display')!=='none') {
+				$('.ostrich-moving').addClass('lose-life');
+
+				this.lives -= 1;
+
+			}
+			// var gbig = Math.trunc((Math.random*100)%100);
+			// var gbig2= Math.trunc((Math.random*100)%100);
+			// var gthin = Math.trunc((Math.random*100)%100);
+			// var gdouble = Math.trunc((Math.random*100)%100);
+			// console.log(gsmall);
+
+			$('.grass-small').css('right', gsmall+"vw");
+            $('.grass-small').css('display', 'block');
         }, 5500);
-    } else if (time === 30) {
+    } else if (time%10 === 7) {
         setTimeout(function() {
+			gbig2 = Math.trunc((Math.random()*100)%100);
+
+			$('.grass-big-second').css('right', gbig2+"vw");
             $('.grass-big-second').css('display', 'block');
         }, 1700);
-    } else if (time === 45) {
+    } else if (time%10 === 9) {
         setTimeout(function() {
+			gbig2 = Math.trunc((Math.random()*100)%100);
+
+			$('.grass-big').css('right', gbig+"vw");
+            $('.grass-big').css('display', 'block');
+        }, 1700);
+    } else if (time%20 === 18) {
+        setTimeout(function() {
+			gdouble = Math.trunc((Math.random()*100)%100);
+
+			$('.grass-double').css('right', gdouble+"vw");
             $('.grass-double').css('display', 'block');
+        }, 200);
+    } else if (time%10 === 4) {
+        setTimeout(function() {
+			gthin = Math.trunc((Math.random()*100)%100);
+
+			$('.grass-thin').css('right', gthin+"vw");
+            $('.grass-thin').css('display', 'block');
         }, 200);
     }
 }
